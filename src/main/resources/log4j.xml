@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- ===================================================================== -->
+<!--  Log4j Configuration                                                  -->
+<!-- ===================================================================== -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+
+   <!-- APPENDER 1: output messages to the console -->
+   <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+      <param name="Target" value="System.out"/>
+      <param name="Threshold" value="DEBUG"/>
+      <layout class="org.apache.log4j.PatternLayout">
+         <!-- The default pattern: Date Priority [Category] Message\n -->
+         <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p (%10F:%L) %m%n"/>
+      </layout>
+   </appender> 
+   <!-- APPENDER 2: Output messages in a local file -->
+   <!-- A time/date based rolling appender -->
+   <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+      <param name="File" value="c:/temp/mytbLog.log"/>
+      <param name="Append" value="true"/>
+      <!-- Rollover at midnight each day -->
+      <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+      <!-- Rollover at the top of each hour
+      <param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>-->
+      <layout class="org.apache.log4j.PatternLayout">
+       <!-- The full pattern: Date MS Priority [Category] (Thread:NDC) Message\n -->
+       <param name="ConversionPattern" value="%d %-5r %-5p [%c] (%t:%x) %m%n"/>      
+      </layout>
+   </appender>
+   <!-- APPENDER 3: EMail events to an administrator -->
+   <appender name="SMTP" class="org.apache.log4j.net.SMTPAppender">
+     <param name="Threshold" value="FATAL"/>
+     <param name="To" value="a.chine@netapsys.fr"/>
+     <param name="From" value="a.chine@netapsys.fr"/>
+     <param name="Subject" value="FATAL Error in TB log4j"/>
+     <param name="SMTPHost" value="mail.netapsys.fr"/>
+     <param name="BufferSize" value="10"/>
+     <layout class="org.apache.log4j.PatternLayout">
+       <param name="ConversionPattern" value="[%d{ABSOLUTE},%c{1}] %m%n"/>
+     </layout>
+   </appender>
+   <!--  APPENDER 4: Socket -->
+   <appender name="SOCKET" class="org.apache.log4j.net.SocketAppender">
+    <param name="RemoteHost" value="localhost"/>
+    <param name="Port" value="4445"/>
+    <param name="LocationInfo" value="false"/>
+   </appender>
+   <!-- APPENDER 5: Log events to xml format file -->
+   <appender name="XML" class="org.apache.log4j.FileAppender">
+	<param name="File" value="tblog.xml"/>
+	<param name="Append" value="false"/>
+	<layout class="org.apache.log4j.xml.XMLLayout"/>
+   </appender>
+<!--  APPENDER 6-->    
+   <appender name="JDBC-MYSQL" class="org.apache.log4j.jdbc.JDBCAppender">
+   	<param name="URL" value="jdbc:mysql://localhost:3306/test"/>
+   	   <param name="Threshold" value="FATAL"/>
+	<param name="user" value="root"/>
+	<param name="password" value="root"/>
+	<param name="driver" value="com.mysql.jdbc.Driver"/>
+	<param name="sql" value="INSERT INTO JDBCLOG4JTEST (num,Date, Logger, level ,Message) VALUES (0,'%d', '%c', '%p', '%m')"/>
+   </appender> 
+    <!-- -->
+ <appender name="JMS" class="org.apache.log4j.net.JMSAppender">
+ 
+<param name="ProviderURL" value="tcp://localhost:61616"/>
+<param name="InitialContextFactoryName" value="org.apache.activemq.jndi.ActiveMQInitialContextFactory"/>
+<param name="topicBindingName" value="MyTopic"/>
+<param name="topicConnectionFactoryBindingName" value="ConnectionFactory"/>
+
+<param name="Threshold" value="DEBUG"/> 
+ </appender>
+ 
+   <!-- Limit categories -->
+   <!-- Limit the com.netapsys.tb category to INFO as its DEBUG is verbose -->
+    
+   <category name="com.netapsys">
+      <priority value="DEBUG"/>
+   </category>
+   
+   <!-- Limit the com.netapsys.tb.samples category to INFO as its DEBUG is verbose -->
+    
+   <category name="org.springframework">
+      <priority value="DEBUG"/>
+   </category>     
+   
+   <!-- ======================= -->
+   <!-- Setup the Root category -->
+   <!-- ======================= -->
+   <root>
+    <appender-ref ref="CONSOLE"/>
+     <!--
+      <appender-ref ref="FILE"/>
+        <appender-ref ref="JDBC-MYSQL"/> 
+ 
+      <appender-ref ref="XML"/>
+      
+      <appender-ref ref="SMTP"/>
+      <appender-ref ref="SOCKET"/>
+ 
+      <appender-ref ref="JDBC-MYSQL"/>  
+      
+        <appender-ref ref="JMS"/>
+      -->
+   </root>
+</log4j:configuration>
