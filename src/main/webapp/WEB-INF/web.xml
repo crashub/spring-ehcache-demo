@@ -9,9 +9,19 @@
 			classpath:/spring.xml
 		</param-value>
 	</context-param>
+		<context-param>
+		<param-name>var</param-name>
+		<param-value>toto</param-value>
+	</context-param>
 	<listener>
 		<listener-class>
 			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>
+			fr.dr.sandbox.listener.CacheListener
 		</listener-class>
 	</listener>
 
@@ -31,5 +41,7 @@
 		<servlet-name>sandbox</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+
 
 </web-app>

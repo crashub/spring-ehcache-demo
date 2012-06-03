@@ -22,4 +22,8 @@ public class Customer {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public static void show() {
+		System.out.println("Hello !");
+	}
 }
