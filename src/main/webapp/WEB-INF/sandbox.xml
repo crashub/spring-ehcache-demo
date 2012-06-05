@@ -40,8 +40,7 @@
 
 	<mvc:annotation-driven />
 	<ehcache:annotation-driven cache-manager="cacheManager" />
-	<bean id="cacheManager"
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="/WEB-INF/ehcache.xml" />
-	</bean>
+
+
+	
 </beans>

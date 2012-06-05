@@ -7,6 +7,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import fr.dr.sandbox.controller.Customer;
@@ -16,8 +17,14 @@ import com.googlecode.ehcache.annotations.When;
 
 @Service("CustomerService")
 public class CustomerService {
-        @Autowired
+        
+    
         public CacheManager cacheManager;
+        
+        @Qualifier(value="customer")
+        public void setMyCache(final CacheManager cache) {
+            cacheManager = cache;
+        }
         
         public boolean saveCustomer(Customer customer){
                 Cache cache=cacheManager.getCache("customer");

@@ -9,10 +9,7 @@
 			classpath:/spring.xml
 		</param-value>
 	</context-param>
-		<context-param>
-		<param-name>var</param-name>
-		<param-value>toto</param-value>
-	</context-param>
+	
 	<listener>
 		<listener-class>
 			org.springframework.web.context.ContextLoaderListener

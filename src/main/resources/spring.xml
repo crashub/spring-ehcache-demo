@@ -15,4 +15,12 @@
 		and @Resource (if available) and JPA's @PersistenceContext and @PersistenceUnit 
 		(if available). -->
 	<context:annotation-config />
+	
+		
+	<bean id="customerService" class="fr.dr.sandbox.controller.CustomerService"/>
+	<bean id="counterService" class="fr.dr.sandbox.bean.CounterService"/>
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="/WEB-INF/ehcache.xml" />
+	</bean>
 </beans>
