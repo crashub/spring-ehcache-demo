@@ -1,5 +1,6 @@
 package fr.dr.sandbox.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.ehcache.Cache;
@@ -18,7 +19,7 @@ import com.googlecode.ehcache.annotations.When;
 @Service("CustomerService")
 public class CustomerService {
         
-    
+        @Autowired
         public CacheManager cacheManager;
         
         @Qualifier(value="customer")
@@ -32,6 +33,11 @@ public class CustomerService {
                 return true;
         }
         
+        /**
+         * 
+         * @param customerId
+         * @return
+         */
         public Customer getCachedCustomer(String customerId){
                 Cache cache=cacheManager.getCache("customer");
                 return (Customer)cache.get(customerId).getObjectValue();        
@@ -55,5 +61,37 @@ public class CustomerService {
                 }
                 return true;
         }
+        
+        /**
+         * Retrieve a list of Customer in cache.
+         * @return List<Customer>.
+         */
+    	public List<Customer> getCache() {
+    		List<Customer> lst = new ArrayList<Customer>();
+            Cache cache=cacheManager.getCache("customer");
+            
+            List<String> l = cache.getKeys();
+            Customer customer = null;
+            for(String customerId : l) {
+                    Element el = (Element)cache.get(customerId);
+                    if (null != el) {
+	                    System.out.println("Key :" + el.getKey());
+	                    customer = (Customer)el.getValue();
+	                    if (null != customer) {
+	                    	System.out.println("Customer id :" + customer.getId());
+	                    	System.out.println("Customer name :" + customer.getName());
+	                    	lst.add(customer);
+	                    }
+                    }
+            }
+            return lst;
+    	}
+    	
+    	/**
+    	 * Print a message.
+    	 */
+    	public static void show() {
+    		System.out.println("You call a static method of CustomerService !");
+    	}    	
 }
 

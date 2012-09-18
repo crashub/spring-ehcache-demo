@@ -12,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import fr.dr.sandbox.bean.CounterService;
 import fr.dr.sandbox.controller.Customer;
-import fr.dr.sandbox.controller.CustomerService;
 
+/**
+ * Fill the cache at startup.
+ * It put a test value in cache (customerId:1, Name:Bob, Address:Bob Address).
+ * @author drieu
+ *
+ */
 public class CacheListener implements ServletContextListener {
 
     @Autowired
@@ -23,19 +27,7 @@ public class CacheListener implements ServletContextListener {
 	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		System.out.println("LOAD");
-//		ServletContext servletContext = sce.getServletContext();
-//		System.out.println("Servlet info :" + servletContext.toString());
-//		
-//        Customer c=new Customer();
-//        c.setId("1");
-//        c.setName("Bob");
-//        c.setAddress("Bob Address");
-//        Cache cache=cacheManager.getCache("customer");
-//        cache.put(new Element(c.getId(),c));
-//        
-//        servletContext.setAttribute("mycache", cacheManager);
-//        System.out.println("FIN LOAD");
+		System.out.println("========> LOAD CACHE in our listener cache ");
 		
 		ServletContext servletContext = sce.getServletContext();
 		if (null == servletContext) {
@@ -44,8 +36,7 @@ public class CacheListener implements ServletContextListener {
         ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
         if (null != ctx) {
             System.out.println("Bean defintion names : " + ctx.getBeanDefinitionNames());
-            CounterService counterservice= (CounterService) ctx.getBean("counterService");
-            counterservice.printCounter(3);
+
             
             CacheManager cacheManager = (CacheManager) WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean("cacheManager");
             Cache cache = cacheManager.getCache("customer");
@@ -57,12 +48,12 @@ public class CacheListener implements ServletContextListener {
             cache.put(new Element(c.getId(),c));
             
             Customer customerInCache = (Customer)cache.get("1").getObjectValue();
-            System.out.println("Name du customer in cache:" + customerInCache.getName());
+            System.out.println("========> Name du customer in cache:" + customerInCache.getName());
             
         } else {
             System.out.println("ctx is null !");
         }
-        System.out.println("FIN LOAD");
+        System.out.println("========> FIN LOAD");
 	}
 
 	@Override

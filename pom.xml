@@ -29,7 +29,11 @@
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -41,11 +45,11 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
-		<dependency>
-			<groupId>org.crsh</groupId>
-			<artifactId>crsh.shell.packaging</artifactId>
-			<version>1.0.0</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.crsh</groupId> -->
+<!-- 			<artifactId>crsh.shell.packaging</artifactId> -->
+<!-- 			<version>1.1.0</version> -->
+<!-- 		</dependency> -->
 		<!-- EhCache -->
 		<dependency>
 			<groupId>com.googlecode.ehcache-spring-annotations</groupId>
@@ -69,6 +73,28 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.crsh</groupId>
+			<artifactId>crsh.shell.embed.spring</artifactId>
+			<version>1.1.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.crsh</groupId>
+			<artifactId>crsh.shell.core</artifactId>
+			<version>1.1.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.crsh</groupId>
+			<artifactId>crsh.shell.packaging</artifactId>
+			<version>1.1.0</version>
+			<type>war</type>
+			<classifier>spring</classifier>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
@@ -97,7 +123,7 @@
 	</build>
 
 	<properties>
-		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+		<org.springframework.version>3.1.1.RELEASE</org.springframework.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

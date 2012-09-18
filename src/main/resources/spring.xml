@@ -18,9 +18,26 @@
 	
 		
 	<bean id="customerService" class="fr.dr.sandbox.controller.CustomerService"/>
-	<bean id="counterService" class="fr.dr.sandbox.bean.CounterService"/>
+<!-- 	<bean id="counterService" class="fr.dr.sandbox.bean.CounterService"/> -->
 	<bean id="cacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="/WEB-INF/ehcache.xml" />
 	</bean>
+	<bean class="org.crsh.spring.SpringWebBootstrap">
+		<property name="config">
+			<props>
+			    <prop key="crash.telnet.port">5000</prop>
+				<!-- VFS configuration -->
+				<prop key="crash.vfs.refresh_period">1</prop>
+				<!-- SSH configuration -->
+				<prop key="crash.ssh.port">2000</prop>
+				<!-- Authentication configuration -->
+				<prop key="crash.auth">simple</prop>
+				<prop key="crash.auth.simple.username">admin</prop>
+				<prop key="crash.auth.simple.password">admin</prop>
+			</props>
+		</property>
+	</bean>
+	<bean class="org.crsh.telnet.TelnetPlugin"/>
+	
 </beans>
