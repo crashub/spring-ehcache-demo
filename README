@@ -1,24 +1,32 @@
 
 Application démo.
 
-L'objectif de cette application est montrer comment on utilise Crash et comment on peut réaliser 
-un script groovy pour crash afin d'afficher le cache.
+The goal of this application is to show how to useCrash to show cache data of a web application.
+
+
+- Build and deploy
 
 mvn clean package
 cp ./target/sandbox*.war /opt/jboss-as-7.1.1.Final/standalone/deployments 
 
 
-ssh -p 2000 -l admin localhost
+- Connection 
 
+ssh -p 2000 -l admin localhost
 %Saisir admin en tant que mot de passe
 %help
 %spring_cache showcache
 
-Dans un navigateur :
+Note : You can connect to a JVM with SSH,Telnet and ID (see crash we site for more information).
 
-http://localhost:8080/sandbox-0.0.1-SNAPSHOT/GetCachedCustomer/1 ==> Affiche l'objet 
-http://localhost:8080/sandbox-0.0.1-SNAPSHOT/SaveCustomer/1  ==> Ajoute un Customer (toujours la meme valeur)
 
-Reournez dans la console crash :
+- In you web browser :
 
-%spring_cache showcache
+
+You have to go to : http://localhost:8080/demo .
+On this page, you will see all link available to manage cache.
+
+- Links :
+
+-> http://julienviet.com/crash/
+-> http://totalprogus.blogspot.fr/
