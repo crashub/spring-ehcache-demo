@@ -10,7 +10,7 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" href="./resources/css/design.css" />
 <script src="./resources/js/script.js"></script>
-<title>Home</title>
+<title>Crash Demo Application</title>
 </head>
 <body>
 	<section>
