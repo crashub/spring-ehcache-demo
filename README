@@ -1,3 +1,24 @@
-TODO : complete the readme
-http://localhost:8080/sandbox-0.0.1-SNAPSHOT/GetCachedCustomer/1
-http://localhost:8080/sandbox-0.0.1-SNAPSHOT/SaveCustomer/1
+
+Application démo.
+
+L'objectif de cette application est montrer comment on utilise Crash et comment on peut réaliser 
+un script groovy pour crash afin d'afficher le cache.
+
+mvn clean package
+cp ./target/sandbox*.war /opt/jboss-as-7.1.1.Final/standalone/deployments 
+
+
+ssh -p 2000 -l admin localhost
+
+%Saisir admin en tant que mot de passe
+%help
+%spring_cache showcache
+
+Dans un navigateur :
+
+http://localhost:8080/sandbox-0.0.1-SNAPSHOT/GetCachedCustomer/1 ==> Affiche l'objet 
+http://localhost:8080/sandbox-0.0.1-SNAPSHOT/SaveCustomer/1  ==> Ajoute un Customer (toujours la meme valeur)
+
+Reournez dans la console crash :
+
+%spring_cache showcache

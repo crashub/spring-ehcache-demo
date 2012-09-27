@@ -2,6 +2,11 @@ package fr.dr.sandbox.controller;
 
 import java.io.Serializable;
 
+/**
+ * Customer with id,name and address.
+ * @author drieu
+ *
+ */
 public class Customer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -10,6 +15,15 @@ public class Customer implements Serializable {
 	public String name;
 	public String id;
 
+	public Customer() {
+	}
+	
+	public Customer(String id, String name, String address) {
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+	
 	public String getAddress() {
 		return address;
 	}

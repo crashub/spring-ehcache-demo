@@ -9,16 +9,9 @@
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	default-autowire="byName">
 	  
-	
-	<!-- Activates various annotations to be detected in bean classes: Spring's 
-		@Required and @Autowired, as well as JSR 250's @PostConstruct, @PreDestroy 
-		and @Resource (if available) and JPA's @PersistenceContext and @PersistenceUnit 
-		(if available). -->
 	<context:annotation-config />
 	
-		
-	<bean id="customerService" class="fr.dr.sandbox.controller.CustomerService"/>
-<!-- 	<bean id="counterService" class="fr.dr.sandbox.bean.CounterService"/> -->
+	<bean id="customerComponent" class="fr.dr.sandbox.controller.CustomerComponent"/>
 	<bean id="cacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="/WEB-INF/ehcache.xml" />

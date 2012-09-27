@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Fichier de conf du contexte d'application pour spring (fichier nommé 
-	spring-mvc-webapp-servlet.xml selon la convention. -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -14,33 +12,15 @@
  		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
   		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring 
   		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
-	<!-- - Tous les controlleurs sont automatiquement détectés grâce à l'annotation 
-		@Controller. - On définit ici dans quel package le post processor doit chercher 
-		ces beans annotés. -->
 	<context:component-scan base-package="fr.dr.sandbox.controller" />
-	<!-- Activates various annotations to be detected in bean classes: Spring's 
-		@Required and @Autowired, as well as JSR 250's @PostConstruct,@PreDestroy 
-		and @Resource (if available) and JPA's @PersistenceContext & @PersistenceUnit. -->
 	<context:annotation-config />
-	<!-- - Les controlleurs de cette application fournissent une annotation 
-		@RequestMapping - Qui peuvent être déclaré de deux manière différentes: - 
-		Au niveau de la classe : - par exemple @RequestMapping("/addVisit.html") 
-		- Pour ce type de controlleurs on peut annoter les méthodes pour une requete 
-		Post ou Get, - Au niveau de chaque méthodes, différents exemples seront fournis. -->
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
-	<!-- Ceci est le view resolver, il permet de définir la technologie de vue 
-		utilisée et comment sélectionner une vue. Ici on prendra la solution la plus 
-		simple elle permet de mapper le nom de la vue retournée avec la sélection 
-		d'une jsp. Ex. si le nom de la vue retournée est "hello" alors on utilisera 
-		le fichier WEB-INF/jsp/hello.jsp pour constuire la vue. -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
 
 	<mvc:annotation-driven />
 	<ehcache:annotation-driven cache-manager="cacheManager" />
-
-
-	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 </beans>

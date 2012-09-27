@@ -1,0 +1,93 @@
+/* Makeshift CSS Reset */
+{
+	margin: 0;
+	padding: 0;
+}
+/* Tell the browser to render HTML 5 elements as block */
+header, footer, aside, nav, article {
+	display: block;
+}
+body {
+	margin: 0 auto;
+	width: 940px;
+	font: 13px/22px Helvetica, Arial, sans-serif;
+	background: #f0f0f0;
+}
+h2 {
+	font-size: 28px;
+	line-height: 44px;
+	padding: 10px 0;
+}
+h3 {
+	font-size: 18px;
+	line-height: 22px;
+	padding: 11px 0;
+}
+p {
+	padding-bottom: 10px;
+}
+
+#txt {
+	padding: 0;
+	color: graytext;
+	font-style:italic;
+}
+
+table
+{
+border-collapse:collapse;
+width:100%;
+max-width:700px;
+min-width:400px;
+text-align:center;
+}
+
+caption
+{
+caption-side:bottom;
+font-weight:bold;
+font-style:italic;
+margin:4px;
+}
+
+table,th, td
+{
+border: 1px solid gray;
+}
+
+th, td
+{
+height: 24px;
+padding:4px;
+vertical-align:middle;
+}
+
+th
+{
+background-image:url(table-shaded.png);
+}
+
+.rowtitle
+{
+background: #9CF;
+font-weight:bold;
+}
+
+ol {counter-reset: repas;} /* on initialise et nomme un compteur */
+li {
+	list-style-type: none;
+	counter-increment: repas; /* on incrémente le compteur à chaque nouveau li */
+	margin-bottom: 5px;
+}
+li:before {
+	content: counter(repas); /* on affiche le compteur */
+	padding: 0 20px 6px;
+	margin-right: 8px;
+	vertical-align: top;
+	background: #678;
+	-moz-border-radius: 60px;
+	border-radius: 60px;
+	font-weight: bold;
+	font-size: 0.8em;
+	color: white;		
+}

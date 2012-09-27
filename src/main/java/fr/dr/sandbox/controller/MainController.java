@@ -5,90 +5,89 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Controller.
+ * @author drieu
+ *
+ */
 @Controller
 public class MainController {
 
 	final Logger logger = Logger.getLogger(getClass().getName());
 
 	@Autowired
-	@Qualifier("CustomerService")
-	public CustomerService customerService;
+	@Qualifier("CustomerComponent")
+	public CustomerComponent customerComponent;
 
 	/**
-	 * Handler de la méthode Get pour l'URL /helloSpringMVC.html.
+	 * Main page of this application.
 	 * 
-	 * @param name
-	 *            le nom que l'on doit afficher dans la vue.
-	 * @param model
-	 *            une map de toutes les données qui seront utilisables dans la
-	 *            vue
-	 * @return le nom de la vue qu'il faudra utiliser.
+	 * @param name Use when we say Hello.
+	 * @param model ModelMap.
+	 * @return view name.
 	 */
 	@RequestMapping(value = "/")
 	public String toIndex(
 			@RequestParam(value = "name", required = false) String name,
 			ModelMap model) {
-		logger.info(">toIndex");
 		model.addAttribute("name", name);
-		logger.info(">add attribute name " + name);
-
-		// on utilisera donc le fichier /WEB-INF/jsp/index.jsp
-		// au regard de la stratégie de résolution des vues
-		// utilisée dans cette application.
+		model.addAttribute("customers", customerComponent.getCache());
 		return "index";
 	}
 
-	@RequestMapping(value = "/GetCustomer/{customerId}", method = { RequestMethod.GET })
-	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody
-	String getCustomer(@PathVariable String customerId) {
-		Customer c = customerService.getCustomer(customerId);
-		return c.toString();
-	}
-
-	@RequestMapping(value = "/GetCachedCustomer/{customerId}", method = { RequestMethod.GET })
-	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody
-	String getCachedCustomer(@PathVariable String customerId) {
-		Customer c = customerService.getCachedCustomer(customerId);
-		return c.toString();
-	}
-
-	@RequestMapping(value = "/ClearCache", method = { RequestMethod.GET })
+	/**
+	 * Clear all data in cache.
+	 * @return String text message OK or KO.
+	 */
+	@RequestMapping(value = "/clearCache", method = { RequestMethod.GET })
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody
 	String clearCache() {
-		boolean result = customerService.clearCache();
-		if (result)
-			return "Sucessfully Cache Cleaned";
-		else
-			return "Not able to Clean Cache";
+		customerComponent.clearCache();
+		return "Cache successfully Cleaned";
 
 	}
+	
+	/**
+	 * Access to the page to add a Customer in cache.
+	 * @param model Model
+	 * @return "add" page.
+	 */
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String questionnaire(final Model model) {
+		final Customer customer = new Customer();
+		model.addAttribute("premierFormulaire", customer);
+		return "add";
+	}
 
-	@RequestMapping(value = "/SaveCustomer/{customerId}", method = { RequestMethod.GET })
+	/**
+	 * Save a Customer.
+	 * @param customer Customer
+	 * @param model Model
+	 * @return "success" or "failed" page.
+	 */
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody
-	String saveCustomer(@PathVariable String customerId) {
-
-		Customer c = new Customer();
-		c.setId(customerId);
-		c.setAddress("New Address");
-		c.setName("New Name");
-		boolean result = customerService.saveCustomer(c);
-		if (result)
-			return "Sucessfully Saved Customer";
-		else
-			return "Not able to Save Customer";
-
+	public String validation(
+			@ModelAttribute("premierFormulaire") final Customer customer,
+			final Model model) {
+		model.addAttribute("retour",
+				customer.getId() + " " + customer.getName());
+		boolean result = customerComponent.saveCustomer(customer);
+		if (result) {
+			return "success";
+		} else {
+			return "failed";
+		}
 	}
 
 }
